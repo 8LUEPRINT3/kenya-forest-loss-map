@@ -177,12 +177,12 @@
     },
     {
       "id": "tree-cover-loss",
-      "name": "Tree cover loss 2001-2023",
+      "name": "Tree cover loss 2001-2025",
       "type": "raster",
       "source": {
         "type": "raster",
         "tiles": [
-          "https://tiles.globalforestwatch.org/umd_tree_cover_loss/v1.11/default/{z}/{x}/{y}.png"
+          "https://tiles.globalforestwatch.org/umd_tree_cover_loss/v1.13/dynamic/{z}/{x}/{y}.png"
         ],
         "tileSize": 256,
         "maxzoom": 12,
@@ -341,7 +341,7 @@
     },
     {
       "id": "group-loss",
-      "name": "Forest loss 2001-2023",
+      "name": "Forest loss 2001-2025",
       "collapsed": false,
       "visible": true,
       "opacity": 1

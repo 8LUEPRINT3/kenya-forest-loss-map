@@ -1,13 +1,13 @@
-// Kenya forest loss per county (2001-2023)
+// Kenya forest loss per county (2001-2025)
 // Paste into https://code.earthengine.google.com (free account).
-// Hansen Global Forest Change v1.11 = loss years through 2023.
+// Hansen Global Forest Change v1.13 = loss years through 2025.
 
-var hansen = ee.Image('UMD/hansen/global_forest_change_2023_v1_11');
+var hansen = ee.Image('UMD/hansen/global_forest_change_2025_v1_13');
 
 // Forest = canopy >= 30% in 2000 (GFW standard; use 10 or 50 if you prefer).
 var forest2000 = hansen.select('treecover2000').gte(30);
 
-// Loss pixels, any year 2001-2023.
+// Loss pixels, any year 2001-2025.
 var loss = hansen.select('lossyear').gt(0).selfMask();
 
 // Loss area in hectares (each pixel = 30 m x 30 m = 0.09 ha).
@@ -40,7 +40,7 @@ var chart = ui.Chart.feature.byFeature({
 })
 .setChartType('ColumnChart')
 .setOptions({
-  title: 'Forest loss by county, Kenya 2001-2023',
+  title: 'Forest loss by county, Kenya 2001-2025',
   hAxis: { title: 'County', slantedText: true },
   vAxis: { title: 'Hectares lost' }
 });

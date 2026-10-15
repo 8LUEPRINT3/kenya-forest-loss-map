@@ -1,5 +1,5 @@
 // Kenya Forest Loss — interactive before/after map
-// Tree cover 2000 vs. annual forest loss (2001–2023).
+// Tree cover 2000 vs. annual forest loss (2001–2025).
 // Data: Hansen Global Forest Change, served by Global Forest Watch public tiles.
 
 import * as maplibregl from './vendor/maplibre-gl.mjs';
@@ -15,7 +15,7 @@ window.addEventListener('error', (e) => {
 
 const GFW = 'https://tiles.globalforestwatch.org';
 const DENSITY_TILES = `${GFW}/umd_tree_cover_density_2000/v1.8/tcd_30/{z}/{x}/{y}.png`;
-const LOSS_TILES = `${GFW}/umd_tree_cover_loss/v1.11/default/{z}/{x}/{y}.png`;
+const LOSS_TILES = `${GFW}/umd_tree_cover_loss/v1.13/dynamic/{z}/{x}/{y}.png`;
 const BASEMAP_TILES = 'https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
 const DEM_TILES = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png';
 

@@ -14,7 +14,7 @@ TEMPLATE = "/tmp/nepal.geolibre.json"
 OUT = "/home/asauce/projects/kenya-forest-loss-map/kenya-forest-loss.geolibre.json"
 
 DENSITY_TILES = "https://tiles.globalforestwatch.org/umd_tree_cover_density_2000/v1.8/tcd_30/{z}/{x}/{y}.png"
-LOSS_TILES = "https://tiles.globalforestwatch.org/umd_tree_cover_loss/v1.11/default/{z}/{x}/{y}.png"
+LOSS_TILES = "https://tiles.globalforestwatch.org/umd_tree_cover_loss/v1.13/dynamic/{z}/{x}/{y}.png"
 ATTR = "Hansen/UMD/Google/USGS/NASA via Global Forest Watch"
 
 with open(TEMPLATE) as f:
@@ -56,12 +56,12 @@ d["mapView"] = {
 }
 d["layers"] = [
     raster_layer("tree-cover-2000", "Tree cover 2000 (canopy \u2265 30%)", DENSITY_TILES, 1.0),
-    raster_layer("tree-cover-loss", "Tree cover loss 2001-2023", LOSS_TILES, 0.9),
+    raster_layer("tree-cover-loss", "Tree cover loss 2001-2025", LOSS_TILES, 0.9),
 ]
 d["selectedLayerId"] = "tree-cover-loss"
 d["layerGroups"] = [
     {"id": "group-forest-2000", "name": "Forest cover 2000", "collapsed": False, "visible": True, "opacity": 1},
-    {"id": "group-loss", "name": "Forest loss 2001-2023", "collapsed": False, "visible": True, "opacity": 1},
+    {"id": "group-loss", "name": "Forest loss 2001-2025", "collapsed": False, "visible": True, "opacity": 1},
 ]
 d["legend"] = {"title": "Legend", "groupByLayer": True, "order": [], "overrides": {}}
 
