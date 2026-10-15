@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kenya Forest Loss · 2001–2023</title>
+<link rel="stylesheet" href="vendor/maplibre-gl.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="title">
+    <h1>Kenya Forest Loss</h1>
+    <p class="sub">Tree cover 2000 vs. annual loss 2001–2023 · Hansen/UMD data via Global Forest Watch</p>
+  </div>
+  <div class="actions">
+    <button id="btn-3d" class="btn">3D view</button>
+    <button id="btn-reset" class="btn">Reset</button>
+  </div>
+</header>
+
+<main id="compare">
+  <div id="before"></div>
+  <div id="after"></div>
+  <div id="divider"><div class="handle">⇆</div></div>
+
+  <div class="tag tag-left">Forest cover · 2000</div>
+  <div class="tag tag-right">Loss · 2001–2023</div>
+
+  <div class="legend">
+    <div class="legend-title">Legend</div>
+    <div class="legend-row"><span class="swatch sw-green"></span> Forest cover (2000)</div>
+    <div class="legend-row"><span class="swatch sw-pink"></span> Forest loss (2001–2023)</div>
+  </div>
+</main>
+
+<footer class="attribution">
+  Forest data: Hansen/UMD/Google/USGS/NASA via Global Forest Watch ·
+  Basemap: © OpenStreetMap contributors © CARTO ·
+  Terrain: AWS Terrain Tiles
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
