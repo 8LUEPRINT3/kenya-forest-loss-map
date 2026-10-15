@@ -2,7 +2,16 @@
 // Tree cover 2000 vs. annual forest loss (2001–2023).
 // Data: Hansen Global Forest Change, served by Global Forest Watch public tiles.
 
-import maplibregl from './vendor/maplibre-gl.mjs';
+import * as maplibregl from './vendor/maplibre-gl.mjs';
+
+// Surface any runtime error on-screen, so a blank map is debuggable.
+window.addEventListener('error', (e) => {
+  const el = document.getElementById('errbox');
+  if (el) {
+    el.hidden = false;
+    el.textContent = 'Error: ' + (e.message || (e.error && e.error.message) || 'unknown');
+  }
+});
 
 const GFW = 'https://tiles.globalforestwatch.org';
 const DENSITY_TILES = `${GFW}/umd_tree_cover_density_2000/v1.8/tcd_30/{z}/{x}/{y}.png`;
