@@ -19,7 +19,16 @@ const LOSS_TILES = `${GFW}/umd_tree_cover_loss/v1.11/default/{z}/{x}/{y}.png`;
 const BASEMAP_TILES = 'https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
 const DEM_TILES = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png';
 
-const HOME = { center: [37.9, 0.2], zoom: 5.5 };
+const params = new URLSearchParams(window.location.search);
+function parsePair(s, fallback) {
+  if (!s) return fallback;
+  const p = s.split(',').map(Number);
+  return (p.length === 2 && p.every(Number.isFinite)) ? p : fallback;
+}
+const HOME = {
+  center: parsePair(params.get('center'), [37.9, 0.2]),
+  zoom: Number.isFinite(Number(params.get('zoom'))) ? Number(params.get('zoom')) : 5.5
+};
 
 const baseStyle = {
   version: 8,
