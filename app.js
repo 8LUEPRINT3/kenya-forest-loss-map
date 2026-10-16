@@ -18,6 +18,30 @@ const DENSITY_TILES = `${GFW}/umd_tree_cover_density_2000/v1.8/tcd_30/{z}/{x}/{y
 const LOSS_TILES = `${GFW}/umd_tree_cover_loss/v1.13/dynamic/{z}/{x}/{y}.png`;
 const BASEMAP_TILES = 'https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
 const DEM_TILES = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png';
+const LABELS_TILES = 'https://basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png';
+const GLYPHS = 'https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf';
+
+// Curated forest & highland names (not present in the CARTO label tiles).
+const PLACES = {
+  type: 'FeatureCollection',
+  features: [
+    { type: 'Feature', properties: { name: 'Mau Forest', kind: 'forest' }, geometry: { type: 'Point', coordinates: [35.6, -0.6] } },
+    { type: 'Feature', properties: { name: 'Kakamega Forest', kind: 'forest' }, geometry: { type: 'Point', coordinates: [34.85, 0.28] } },
+    { type: 'Feature', properties: { name: 'Arabuko-Sokoke Forest', kind: 'forest' }, geometry: { type: 'Point', coordinates: [39.85, -3.35] } },
+    { type: 'Feature', properties: { name: 'Shimba Hills', kind: 'forest' }, geometry: { type: 'Point', coordinates: [39.4, -4.25] } },
+    { type: 'Feature', properties: { name: 'Loita Hills', kind: 'forest' }, geometry: { type: 'Point', coordinates: [35.85, -1.85] } },
+    { type: 'Feature', properties: { name: 'Marsabit Forest', kind: 'forest' }, geometry: { type: 'Point', coordinates: [37.95, 2.32] } },
+    { type: 'Feature', properties: { name: 'South Nandi Forest', kind: 'forest' }, geometry: { type: 'Point', coordinates: [35.05, 0.05] } },
+    { type: 'Feature', properties: { name: 'Taita Hills', kind: 'forest' }, geometry: { type: 'Point', coordinates: [38.3, -3.4] } },
+    { type: 'Feature', properties: { name: 'Aberdare Range', kind: 'mountain' }, geometry: { type: 'Point', coordinates: [36.7, -0.5] } },
+    { type: 'Feature', properties: { name: 'Mount Kenya', kind: 'mountain' }, geometry: { type: 'Point', coordinates: [37.3, -0.15] } },
+    { type: 'Feature', properties: { name: 'Cherangani Hills', kind: 'mountain' }, geometry: { type: 'Point', coordinates: [35.5, 1.1] } },
+    { type: 'Feature', properties: { name: 'Mount Elgon', kind: 'mountain' }, geometry: { type: 'Point', coordinates: [34.55, 1.1] } },
+    { type: 'Feature', properties: { name: 'Ngong Hills', kind: 'mountain' }, geometry: { type: 'Point', coordinates: [36.65, -1.42] } },
+    { type: 'Feature', properties: { name: 'Matthews Range', kind: 'mountain' }, geometry: { type: 'Point', coordinates: [37.3, 1.2] } },
+    { type: 'Feature', properties: { name: 'Chyulu Hills', kind: 'mountain' }, geometry: { type: 'Point', coordinates: [37.9, -2.6] } }
+  ]
+};
 
 const params = new URLSearchParams(window.location.search);
 function parsePair(s, fallback) {
@@ -32,6 +56,7 @@ const HOME = {
 
 const baseStyle = {
   version: 8,
+  glyphs: GLYPHS,
   sources: {
     basemap: { type: 'raster', tiles: [BASEMAP_TILES], tileSize: 256, maxzoom: 20 }
   },
@@ -73,10 +98,42 @@ function addLoss(map, opacity) {
   });
 }
 
-beforeMap.on('load', () => addDensity(beforeMap, 1.0));
+function addLabels(map) {
+  // Place/area names (towns, counties, roads, water) drawn on top of the data.
+  map.addSource('labels', {
+    type: 'raster', tiles: [LABELS_TILES], tileSize: 256, maxzoom: 20
+  });
+  map.addLayer({
+    id: 'labels', type: 'raster', source: 'labels',
+    paint: { 'raster-opacity': 1, 'raster-resampling': 'linear' }
+  });
+
+  // Forest & highland names the label tiles omit.
+  map.addSource('places', { type: 'geojson', data: PLACES });
+  map.addLayer({
+    id: 'places-forest', type: 'symbol', source: 'places',
+    filter: ['==', ['get', 'kind'], 'forest'],
+    minzoom: 4,
+    layout: { 'text-field': ['get', 'name'], 'text-font': ['Noto Sans Bold'], 'text-size': 12 },
+    paint: { 'text-color': '#1b5e20', 'text-halo-color': '#ffffff', 'text-halo-width': 1.4 }
+  });
+  map.addLayer({
+    id: 'places-mountain', type: 'symbol', source: 'places',
+    filter: ['==', ['get', 'kind'], 'mountain'],
+    minzoom: 4,
+    layout: { 'text-field': ['get', 'name'], 'text-font': ['Noto Sans Bold'], 'text-size': 11 },
+    paint: { 'text-color': '#37474f', 'text-halo-color': '#ffffff', 'text-halo-width': 1.3 }
+  });
+}
+
+beforeMap.on('load', () => {
+  addDensity(beforeMap, 1.0);
+  addLabels(beforeMap);
+});
 afterMap.on('load', () => {
   addDensity(afterMap, 0.45);
   addLoss(afterMap, 0.9);
+  addLabels(afterMap);
 });
 
 // Keep the two maps in lockstep.
