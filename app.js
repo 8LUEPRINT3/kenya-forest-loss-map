@@ -228,9 +228,9 @@ btnRecent.addEventListener('click', () => {
   showingRecent = !showingRecent;
   afterMap.setLayoutProperty('loss', 'visibility', showingRecent ? 'none' : 'visible');
   afterMap.setLayoutProperty('recent', 'visibility', showingRecent ? 'visible' : 'none');
-  btnRecent.textContent = showingRecent ? 'All loss (2001–2025)' : 'Recent loss (2022–2025)';
+  btnRecent.textContent = showingRecent ? 'All loss (2001–2025)' : '2022–2025 damage';
   btnRecent.classList.toggle('active', showingRecent);
-  document.getElementById('tag-right').textContent = showingRecent ? 'Loss · 2022–2025' : 'Loss · 2001–2025';
+  document.getElementById('tag-right').textContent = showingRecent ? 'Damage · 2022–2025' : 'Loss · 2001–2025';
   document.getElementById('legend-all').hidden = showingRecent;
   document.getElementById('legend-recent').hidden = !showingRecent;
 });

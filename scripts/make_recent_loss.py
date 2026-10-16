@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Build a single Web Mercator image of recent forest loss (2022-2025).
 
-Reads Hansen lossyear COGs (v1.13) covering Kenya, reprojects to Web Mercator
-at 76 m/px, keeps only loss years 22-25 (2022-2025), and writes an indexed
-PNG with a 4-colour ramp (2022..2025) plus transparency.
+Reads Hansen lossyear COGs (v1.13) covering Kenya, reprojects to Web Mercator,
+keeps only loss years 22-25 (2022-2025), and writes an indexed PNG showing the
+cumulative 2022-2025 damage extent in a single colour.
 
 Run:  python3 scripts/make_recent_loss.py
 Requires: rasterio, numpy, Pillow
@@ -54,15 +54,12 @@ for t in TILES:
     np.maximum(dst, tmp, out=dst)
     print(f"  merged {t}: recent-loss pixels={int(((dst>=22)&(dst<=25)).sum())}")
 
-# Keep only 2022-2025 (lossyear 22..25), map to palette indices 1..4.
+# Keep only 2022-2025 (lossyear 22..25), map to a single damage colour (index 1).
 idx = np.zeros((height, width), dtype="uint8")
-idx[dst == 22] = 1
-idx[dst == 23] = 2
-idx[dst == 24] = 3
-idx[dst == 25] = 4
+idx[(dst >= 22) & (dst <= 25)] = 1
 
-# Palette: 0=transparent, 1=2022 yellow, 2=2023 orange, 3=2024 red, 4=2025 dark red.
-colors = [(0, 0, 0), (255, 213, 79), (255, 152, 0), (244, 67, 54), (183, 28, 28)]
+# Palette: 0=transparent, 1=damage orange (#ff6d00) for the 2022-2025 extent.
+colors = [(0, 0, 0), (255, 109, 0)]
 palette = []
 for c in colors:
     palette.extend(list(c))
