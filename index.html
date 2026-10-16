@@ -40,6 +40,27 @@
       <div class="legend-row"><span class="swatch sw-damage"></span> Forest loss 2022–2025</div>
     </div>
   </div>
+
+  <aside id="metrics">
+    <div class="metrics-title">Forest loss</div>
+    <div class="metric-name" id="metric-name">Loading…</div>
+    <div class="metric-row"><span>Total 2001–2025</span><b id="metric-total">—</b></div>
+    <div class="metric-row"><span>2001–2015</span><b id="metric-early">—</b></div>
+    <div class="metric-row"><span>2016–2025</span><b id="metric-late">—</b></div>
+    <div class="metric-unit">hectares · Hansen/UMD lossyear</div>
+  </aside>
+
+  <aside id="chart-panel">
+    <div class="chart-head">
+      <h4>Annual forest loss</h4>
+      <div class="chart-actions">
+        <button id="btn-export-png" class="btn" title="Download chart as PNG">PNG</button>
+        <button id="btn-export-pdf" class="btn" title="Download PDF report">PDF</button>
+      </div>
+    </div>
+    <select id="region-select"></select>
+    <div class="chart-wrap"><canvas id="forestLossChart"></canvas></div>
+  </aside>
 </main>
 
 <footer class="attribution">
@@ -48,6 +69,10 @@
   Terrain: AWS Terrain Tiles
 </footer>
 
+<script src="vendor/chart.umd.js" defer></script>
+<script src="vendor/jspdf.umd.min.js" defer></script>
+<script src="vendor/jspdf.plugin.autotable.min.js" defer></script>
+<script src="metrics.js" defer></script>
 <script type="module" src="app.js"></script>
 </body>
 </html>

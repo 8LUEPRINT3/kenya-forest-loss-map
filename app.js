@@ -81,6 +81,7 @@ function createMap(container) {
     minZoom: 6,
     maxZoom: 16,
     maxBounds: KENYA_BOUNDS,
+    preserveDrawingBuffer: true,
     attributionControl: false
   });
 }

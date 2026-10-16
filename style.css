@@ -60,3 +60,34 @@ body { display: flex; flex-direction: column; background: #0f1419; color: #e8e8e
   padding: 6px 12px; font-size: 11px; color: #8b949c;
   background: #141a20; border-top: 1px solid #232b33;
 }
+
+/* Metrics panel */
+#metrics {
+  position: absolute; left: 12px; bottom: 110px; z-index: 15;
+  padding: 10px 12px; background: rgba(15,20,25,.88);
+  border: 1px solid #2b343d; border-radius: 8px; font-size: 12px;
+  min-width: 210px;
+}
+.metrics-title { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: #9aa4ad; }
+.metric-name { font-weight: 700; font-size: 13px; margin: 4px 0 6px; color: #ffd27f; }
+.metric-row { display: flex; justify-content: space-between; gap: 12px; margin-top: 3px; }
+.metric-row span { color: #b7c0c9; }
+.metric-row b { color: #fff; font-variant-numeric: tabular-nums; }
+.metric-unit { margin-top: 8px; font-size: 10px; color: #6b757e; }
+
+/* Chart panel */
+#chart-panel {
+  position: absolute; right: 12px; bottom: 12px; z-index: 15;
+  width: 400px; max-width: 92vw; padding: 12px;
+  background: rgba(15,20,25,.92); border: 1px solid #2b343d; border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.35);
+}
+.chart-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; }
+.chart-head h4 { margin: 0; font-size: 13px; }
+.chart-actions { display: flex; gap: 6px; }
+.chart-actions .btn { padding: 4px 9px; font-size: 11px; }
+#region-select {
+  width: 100%; padding: 6px 8px; margin-bottom: 8px; font-size: 12px;
+  background: #1d252d; color: #e8e8e8; border: 1px solid #3a444d; border-radius: 6px;
+}
+.chart-wrap { position: relative; height: 240px; }
