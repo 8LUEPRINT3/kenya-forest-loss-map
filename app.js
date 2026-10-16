@@ -46,8 +46,8 @@ const PLACES = {
 // Recent forest loss (2022–2025), precomputed from Hansen lossyear COGs.
 const RECENT_LOSS_IMAGE = 'recent-loss.png';
 const RECENT_LOSS_COORDS = [
-  [3773730.74, 512620.65], [4664286.66, 512620.65],
-  [4664286.66, -523789.37], [3773730.74, -523789.37]
+  [33.9, 4.6], [41.9, 4.6],
+  [41.9, -4.7], [33.9, -4.7]
 ];
 
 const params = new URLSearchParams(window.location.search);

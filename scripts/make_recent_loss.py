@@ -72,5 +72,6 @@ img = Image.fromarray(idx, mode="P")
 img.putpalette(palette)
 img.save(OUT, transparency=0)
 print(f"wrote {OUT} ({os.path.getsize(OUT)} bytes)")
-print(f"coordinates for app.js (NW, NE, SE, SW):")
-print(f"  [[{left:.2f},{top:.2f}],[{right:.2f},{top:.2f}],[{right:.2f},{bottom:.2f}],[{left:.2f},{bottom:.2f}]]")
+minx, miny, maxx, maxy = BOUNDS
+print("coordinates for app.js (NW, NE, SE, SW) in lng/lat:")
+print(f"  [[{minx},{maxy}],[{maxx},{maxy}],[{maxx},{miny}],[{minx},{miny}]]")
