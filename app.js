@@ -43,6 +43,13 @@ const PLACES = {
   ]
 };
 
+// Recent forest loss (2022–2025), precomputed from Hansen lossyear COGs.
+const RECENT_LOSS_IMAGE = 'recent-loss.png';
+const RECENT_LOSS_COORDS = [
+  [3773730.74, 512620.65], [4664286.66, 512620.65],
+  [4664286.66, -523789.37], [3773730.74, -523789.37]
+];
+
 const params = new URLSearchParams(window.location.search);
 function parsePair(s, fallback) {
   if (!s) return fallback;
@@ -126,6 +133,17 @@ function addLabels(map) {
   });
 }
 
+function addRecentLoss(map) {
+  map.addSource('recent', {
+    type: 'image', url: RECENT_LOSS_IMAGE, coordinates: RECENT_LOSS_COORDS
+  });
+  map.addLayer({
+    id: 'recent', type: 'raster', source: 'recent',
+    layout: { visibility: 'none' },
+    paint: { 'raster-opacity': 0.9, 'raster-resampling': 'linear' }
+  });
+}
+
 beforeMap.on('load', () => {
   addDensity(beforeMap, 1.0);
   addLabels(beforeMap);
@@ -133,6 +151,7 @@ beforeMap.on('load', () => {
 afterMap.on('load', () => {
   addDensity(afterMap, 0.45);
   addLoss(afterMap, 0.9);
+  addRecentLoss(afterMap);
   addLabels(afterMap);
 });
 
@@ -200,6 +219,20 @@ btn3d.addEventListener('click', () => {
 // Reset view.
 document.getElementById('btn-reset').addEventListener('click', () => {
   beforeMap.easeTo({ center: HOME.center, zoom: HOME.zoom, bearing: 0, pitch: is3d ? 55 : 0 });
+});
+
+// Recent-loss (2022–2025) toggle.
+const btnRecent = document.getElementById('btn-recent');
+let showingRecent = false;
+btnRecent.addEventListener('click', () => {
+  showingRecent = !showingRecent;
+  afterMap.setLayoutProperty('loss', 'visibility', showingRecent ? 'none' : 'visible');
+  afterMap.setLayoutProperty('recent', 'visibility', showingRecent ? 'visible' : 'none');
+  btnRecent.textContent = showingRecent ? 'All loss (2001–2025)' : 'Recent loss (2022–2025)';
+  btnRecent.classList.toggle('active', showingRecent);
+  document.getElementById('tag-right').textContent = showingRecent ? 'Loss · 2022–2025' : 'Loss · 2001–2025';
+  document.getElementById('legend-all').hidden = showingRecent;
+  document.getElementById('legend-recent').hidden = !showingRecent;
 });
 
 // Keep both maps sized to the container.

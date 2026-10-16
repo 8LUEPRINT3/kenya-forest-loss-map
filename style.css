@@ -47,6 +47,10 @@ body { display: flex; flex-direction: column; background: #0f1419; color: #e8e8e
 .swatch { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
 .sw-green { background: #3f9e4d; }
 .sw-pink { background: #e0115f; }
+.sw-2022 { background: #ffd54f; }
+.sw-2023 { background: #ff9800; }
+.sw-2024 { background: #f44336; }
+.sw-2025 { background: #b71c1c; }
 
 #errbox {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
