@@ -16,9 +16,9 @@ window.addEventListener('error', (e) => {
 const GFW = 'https://tiles.globalforestwatch.org';
 const DENSITY_TILES = `${GFW}/umd_tree_cover_density_2000/v1.8/tcd_30/{z}/{x}/{y}.png`;
 const LOSS_TILES = `${GFW}/umd_tree_cover_loss/v1.13/dynamic/{z}/{x}/{y}.png`;
-const BASEMAP_TILES = 'https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
+const BASEMAP_TILES = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 const DEM_TILES = 'https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png';
-const LABELS_TILES = 'https://basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png';
+const LABELS_TILES = 'https://basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}.png';
 const GLYPHS = 'https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf';
 
 // Curated forest & highland names (not present in the CARTO label tiles).
@@ -56,9 +56,11 @@ function parsePair(s, fallback) {
   const p = s.split(',').map(Number);
   return (p.length === 2 && p.every(Number.isFinite)) ? p : fallback;
 }
+const KENYA_BOUNDS = [[33.9, -5.0], [41.9, 5.5]]; // [SW, NE] in [lng, lat]
+
 const HOME = {
-  center: parsePair(params.get('center'), [37.9, 0.2]),
-  zoom: Number.isFinite(Number(params.get('zoom'))) ? Number(params.get('zoom')) : 5.5
+  center: parsePair(params.get('center'), [37.9062, 0.0236]), // Kenya geographic center
+  zoom: Number.isFinite(Number(params.get('zoom'))) ? Number(params.get('zoom')) : 7
 };
 
 const baseStyle = {
@@ -76,8 +78,9 @@ function createMap(container) {
     style: baseStyle,
     center: HOME.center,
     zoom: HOME.zoom,
-    minZoom: 3,
+    minZoom: 6,
     maxZoom: 16,
+    maxBounds: KENYA_BOUNDS,
     attributionControl: false
   });
 }
