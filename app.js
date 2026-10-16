@@ -140,7 +140,7 @@ function addRecentLoss(map) {
   map.addLayer({
     id: 'recent', type: 'raster', source: 'recent',
     layout: { visibility: 'none' },
-    paint: { 'raster-opacity': 0.9, 'raster-resampling': 'linear' }
+    paint: { 'raster-opacity': 0.9, 'raster-resampling': 'nearest' }
   });
 }
 

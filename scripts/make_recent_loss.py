@@ -23,7 +23,7 @@ OUT = os.path.join(os.path.dirname(__file__), "..", "recent-loss.png")
 
 # Kenya extent (EPSG:4326): minx, miny, maxx, maxy
 BOUNDS = (33.9, -4.7, 41.9, 4.6)
-RES = 76.0  # metres/pixel (~zoom 11)
+RES = 260.0  # metres/pixel (~zoom 9.5); sized to fit WebGL texture limit (<=8192)
 
 src_crs = CRS.from_epsg(4326)
 dst_crs = CRS.from_epsg(3857)
